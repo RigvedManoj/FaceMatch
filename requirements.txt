@@ -1,5 +1,7 @@
 deepface
-tf-keras
-ultralytics
 black
 isort
+tf-keras
+ultralytics
+pandas
+scikit-learn
