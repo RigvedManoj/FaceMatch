@@ -8,7 +8,7 @@ from deepface import DeepFace
 # faces in the image.
 def detect_faces_and_get_embeddings(image_path):
     current_dir = os.path.dirname(__file__)
-    config_path = os.path.join(current_dir, "..", "resources", "model_config.json")
+    config_path = os.path.join(current_dir, "../..", "resources", "model_config.json")
     with open(config_path, "r") as config_file:
         config = json.load(config_file)
     model_name = config["model_name"]
@@ -33,7 +33,7 @@ def detect_faces_and_get_embeddings(image_path):
         )
 
         face_embeddings.append(
-            {"embedding": embedding, "region": (x, y, width, height)}
+            {"image_path": image_path, "embedding": embedding, "region": (x, y, width, height)}
         )
 
     return face_embeddings

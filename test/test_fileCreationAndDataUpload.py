@@ -2,7 +2,7 @@ import os
 import unittest
 from unittest.mock import patch
 
-from src.facematch.bulk_upload import upload_embedding_to_database
+from src.facematch.database_functions import upload_embedding_to_database
 
 
 class TestUploadEmbeddingToDatabase(unittest.TestCase):

@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from src import face_representation
+from src.facematch import face_representation
 
 
 class TestApp(unittest.TestCase):
