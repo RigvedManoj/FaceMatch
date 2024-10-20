@@ -1,14 +1,14 @@
 import json
-import os
 
 from deepface import DeepFace
+
+from src.facematch.resource_path import get_resource_path
 
 
 # Function that takes in path to image and returns a list of face embeddings and corresponding region for all
 # faces in the image.
 def detect_faces_and_get_embeddings(image_path):
-    current_dir = os.path.dirname(__file__)
-    config_path = os.path.join(current_dir, "..", "resources", "model_config.json")
+    config_path = get_resource_path("model_config.json")
     with open(config_path, "r") as config_file:
         config = json.load(config_file)
     model_name = config["model_name"]
