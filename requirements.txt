@@ -5,3 +5,5 @@ tf-keras
 ultralytics
 pandas
 scikit-learn
+faiss-cpu
+ruff
