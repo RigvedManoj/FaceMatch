@@ -30,6 +30,15 @@ for file in "$input_directory"/*; do
         # Call the Python script and capture its output
         result=$(python ../src/Sample_Client/sample_find_face_client.py "$file")
 
+        # Extract the value of the "path" key using jq
+        path=$(echo "$result" | jq -r '.files[0].path')
+
+        # Replace backslashes with forward slashes for compatibility
+        normalized_path=$(echo "$path" | sed 's|\\|/|g')
+
+        # Extract the file name
+        result=$(basename "$normalized_path")
+
         # Append the filename and result as a new row in the CSV file
         echo "$filename,$result" >> "$output_csv"
     fi
