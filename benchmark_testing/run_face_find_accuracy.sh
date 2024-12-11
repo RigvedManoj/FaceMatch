@@ -16,7 +16,7 @@ start_time=$(date +%s)
 # Define the directory containing the files and the output CSV file
 input_directory="\\path\\to\\input\\directory" # Path to directory of query images
 output_csv="\\path\\to\\output\\csv" # Path to csv file containing top-n matches
-
+similarity_threshold = 0 #Change this value appropriately if needed
 # Sample directory path
 # input_directory = "<path to dataset folder>\\LFWdataset\\sample_queries"
 # output_csv = "<path to dataset folder>\\LFWdataset\\output.csv"
@@ -32,7 +32,7 @@ for file in "$input_directory"/*; do
         filename=$(basename "$file")
 
         # Call the Python script and capture its output
-        result=$(python ../src/Sample_Client/sample_find_face_client.py --file_paths "$file" --database_name "sample_db" | grep -v "Matches found" | tr '\n' ' ')
+        result=$(python ../src/Sample_Client/sample_find_face_client.py --file_paths "$file" --similarity_threshold $similarity_threshold --database_name "sample_db" | grep -v "Matches found" | tr '\n' ' ')
 
         # Append the filename and result as a new row in the CSV file
         echo "$filename,$result" >> "$output_csv"

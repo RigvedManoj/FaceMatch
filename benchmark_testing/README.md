@@ -34,56 +34,100 @@ Note: One such pair of sample database and queries directories have already been
   A script to test edge cases of a face recognition system allowing us to find reasons for failure. It visualizes detected faces by drawing bounding boxes on images and verifies the similarity between two images, providing the distance and the metric used for comparison. 
 ---
 
-## Instructions to Run Testing
-1. **Prepare Dataset**  
-   - Download the dataset containing multiple directories (each directory represents a person and contains their images) from the link under the [Dataset](#dataset) section.
+## Instructions to Run Accuracy Testing
+1. **Prepare Dataset**
+    - Download the dataset containing multiple directories (each directory represents a person and contains their images) from the link under the [Dataset](#dataset) section.
 
-    > [!NOTE]\
-    > *All the code below should be executed from the `benchmark_testing` directory.*
-    > Make sure to execute all .sh files using git bash.
+   > [!NOTE]\
+   > *All the code below should be executed from the `benchmark_testing` directory.*
+   > Make sure to execute all .sh files using git bash.
 
 2. **Run Test Data Setup (Optional)**
-   - Replace the directory names in the `test_data_setup.py` file with appropriate directory locations.
-   - Execute `test_data_setup.py` to create the `sample_database directory` and `sample_queries directory`.
+    - Replace the directory names in the `test_data_setup.py` file with appropriate directory locations.
+    - Execute `test_data_setup.py` to create the `sample_database directory` and `sample_queries directory`.
 
     ```
     python test_data_setup.py
     ```
 
 3. **Run Bulk Upload and Measure Upload Time**
-   - Replace the directory names in the `run_bulk_upload.sh` file with appropriate directory locations.
-   - Execute `run_bulk_upload.sh` to upload images to the database.
+    - Replace the directory names in the `run_bulk_upload.sh` file with appropriate directory locations.
+    - Execute `run_bulk_upload.sh` to upload images to the database.
 
     ```
     ./run_bulk_upload.sh
     ```
 
 4. **Run Face Find and Measure Search Time**
-   - Replace the directory names in the `run_face_find_time.sh` file with appropriate directory locations.
-   - Execute `run_face_find_time.sh` to measure the response time of the face recognition system for a single query.
+    - Replace the directory names in the `run_face_find_time.sh` file with appropriate directory locations.
+    - Execute `run_face_find_time.sh` to measure the response time of the face recognition system for a single query.
 
     ```
     ./run_face_find_time.sh
     ```
 
-5. **Run Face Find and Measure Accuracy**  
-   - Replace the directory names in the `run_face_find_accuracy.sh` file with appropriate directory locations.
-   - Execute `run_face_find_accuracy.sh` to create output csv.
+5. **Run Face Find and Measure Accuracy**
+    - Replace the directory names in the `run_face_find_accuracy.sh` file with appropriate directory locations.
+    - Execute `run_face_find_accuracy.sh` to create output csv.
 
    ```
    ./run_face_find_accuracy.sh
    ```
 
-   - Use `test_data_metrics.py` to analyze the accuracy of the face recognition system.
-  
+    - Use `test_data_metrics.py` to analyze the accuracy of the face recognition system.
+
     ```
     python test_data_metrics.py
     ```
 
 6. **Visualize face recognition results**
-  - Replace the directory names in the `edgecase_testing.py` file with appropriate image paths. 
-  - Execute `edgecase_testing.py` to visualize the results of the face recognition system.
+- Replace the directory names in the `edgecase_testing.py` file with appropriate image paths.
+- Execute `edgecase_testing.py` to visualize the results of the face recognition system.
+
+  ```
+  python edgecase_testing.py
+  ```
+
+## Instructions to Run Precision and Recall Testing
+1. **Prepare Dataset**
+    - Download the dataset containing multiple directories (each directory represents a person and contains their images) from the link under the [Dataset](#dataset) section.
+
+   > [!NOTE]\
+   > *All the code below should be executed from the `benchmark_testing` directory.*
+   > Make sure to execute all .sh files using git bash.
+
+2. **Run Test Data Setup (Optional)**
+    - Replace the directory names in the `test_data_setup.py` file with appropriate directory locations.
+    - Execute `test_data_setup.py` to create the `sample_database directory` and `sample_queries directory`.
 
     ```
-    python edgecase_testing.py
+    python test_data_setup.py
     ```
+
+3. **Run Bulk Upload**
+    - Create a `new_sample_database directory` that contains only the first half of the images in the original `sample_database directory`.
+    - Replace the directory names (use `new_sample_database directory` ) in the `run_bulk_upload.sh` file with appropriate directory locations.
+    - Execute `run_bulk_upload.sh` to upload images to the database.
+
+    ```
+    ./run_bulk_upload.sh
+    ```
+
+4. **Run Face Find and Measure Accuracy**
+    - Replace the directory names in the `run_face_find_accuracy.sh` file with appropriate directory locations.
+    - Replace the similarity threshold with `0.02` increments for every run of Face Find.
+    - Execute `run_face_find_accuracy.sh` to create output csv for each similarity threshold.
+
+   ```
+   ./run_face_find_accuracy.sh
+   ```
+
+    - Use `test_data_metrics_confusion_matrix.py` to analyze the precision and recall for each similarity threshold.
+
+    ```
+    python test_data_metrics.py
+    ```
+
+5. **Visualize the ROC curve**
+- The confusion matrix from the above can be used to measure tpr and fpr for each threshold.
+- Use this to plot the ROC curve.

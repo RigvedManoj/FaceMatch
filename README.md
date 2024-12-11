@@ -114,18 +114,36 @@ We conduct a series of experiments to evaluate the performance and accuracy of F
 
 We evaluate FaceMatch using the following metrics:
 
+## Accuracy Testing:
+
+_In this type of testing, all test images have a corresponding match in the database. If match is returned, it is True, otherwise False._
+
 1. **Upload Time**: The time taken to upload images to the database.
 2. **Search Time per Image**: The time taken to find matches for a single image.
 3. **Faiss Accuracy (Top-n)**: The percentage of images in the database that have at least one match within the top-n results using FAISS search algorithm.  Atleast one match in top-n is considered a positive match, meaning that the person of interest is identified within the image.
 
 
-## Metrics
+### Metrics
 | Face Recognition Model | Number of Faces in Database | Upload Time (in seconds) | Search Time per Image (in seconds) | Top-n | Faiss Accuracy |
 |-------------------------|-----------------------------|---------------------------|------------------------------------|-------|----------------|
 | ArcFace                | 1680                        | 242                       | < 1.5                              | 10    | 93.2           |
 | FaceNet                | 1680                        | 463                       | < 2                                | 10    | 94             |
 | VGGFace                | 1680                        | 650                       | < 3                                | 10    | 90             |
 
+
+## Precision and Recall Testing (with ROC curve):
+
+_In this type of testing, half the test images have a corresponding match in the database, the other half does not.
+This helps measure True Positive, False Positive, True Negative and False Negative._
+
+### Metrics
+| Face Recognition Model | Number of Faces in Database | Threshold | Accuracy | Precision | Recall |
+|------------------------|-----------------------------|-----------|----------|-----------|--------|
+| ArcFace                | 840                         | 0.48      | 77       | 79        | 73     |
+| FaceNet                | 840                         | 0.63      | 75       | 75        | 75     |
+
+### ROC Curve
+![Alt Text](ROC_Curve.png)
 
 The above metrics were calculated using the following system configuration:
 
